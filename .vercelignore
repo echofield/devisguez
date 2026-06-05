@@ -1,0 +1,8 @@
+# Docs internes — contiennent les montants du devis, ne jamais déployer
+*.md
+
+# Devis chiffré — privé, remis à la main
+*.pdf
+
+# Sauvegardes vidéos non compressées (lourdes, inutiles en prod)
+public/videos/_orig/

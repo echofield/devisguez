@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optique Guez · Projet d'agencement — SYMI Intelligence</title>
+<style>
+@font-face{font-family:'Cormorant';src:url('public/fonts/CG-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Cormorant';src:url('public/fonts/CG-Medium.ttf') format('truetype');font-weight:500;font-display:swap}
+@font-face{font-family:'Cormorant';src:url('public/fonts/CG-SemiBold.ttf') format('truetype');font-weight:600;font-display:swap}
+@font-face{font-family:'Cormorant';src:url('public/fonts/CG-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+
+:root{
+  --ink:#1f2320; --cream:#f4efe6; --cream-2:#faf7f1; --paper:#fffdf9;
+  --forest:#2c3e33; --sage:#6e7e63; --oak:#c8a878; --line:#dad3c6; --mute:#8a8275;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Cormorant',Georgia,serif}
+
+/* ---------- NAV ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+  padding:18px 40px;mix-blend-mode:difference;color:#fff;transition:.4s}
+nav .brand{font-size:13px;letter-spacing:4px;font-weight:700;text-transform:uppercase}
+nav .ref{font-size:11px;letter-spacing:2px;opacity:.8}
+
+/* ---------- HERO ---------- */
+.hero{height:100vh;position:relative;display:flex;align-items:flex-end;overflow:hidden}
+.hero img,.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(31,35,32,.25) 0%,rgba(31,35,32,0) 30%,rgba(31,35,32,.55) 100%);z-index:1}
+.hero-content{position:relative;z-index:2;padding:0 40px 64px;color:#fff;max-width:1100px}
+.hero .eyebrow{font-size:12px;letter-spacing:6px;text-transform:uppercase;font-weight:700;margin-bottom:14px;opacity:.92}
+.hero h1{font-family:'Cormorant',serif;font-weight:600;font-size:clamp(48px,9vw,128px);line-height:.92;letter-spacing:1px}
+.hero .sub{font-family:'Cormorant',serif;font-weight:500;font-size:clamp(20px,3vw,34px);margin-top:8px;opacity:.95}
+.scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;color:#fff;font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.8;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ---------- INTRO ---------- */
+.intro{max-width:1000px;margin:0 auto;padding:120px 40px 80px;text-align:center}
+.intro .kicker{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--forest);font-weight:700;margin-bottom:24px}
+.intro p{font-family:'Cormorant',serif;font-size:clamp(24px,3.4vw,40px);line-height:1.32;font-weight:500;color:var(--ink)}
+.intro p .mute{color:var(--sage);font-style:italic}
+
+/* ---------- STATS ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);max-width:1200px;margin:0 auto 60px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:34px 24px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat .l{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);font-weight:700}
+.stat .v{font-family:'Cormorant',serif;font-weight:600;font-size:clamp(34px,4.5vw,56px);line-height:1.05;margin-top:8px}
+.stat.accent .v{color:var(--forest)}
+
+/* ---------- SCROLL SECTIONS ---------- */
+.scene{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:0}
+.scene.reverse{grid-template-columns:1fr 1fr}
+.scene-img{height:100vh;position:relative;overflow:hidden}
+.scene-img img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.4s cubic-bezier(.16,1,.3,1)}
+.scene.in .scene-img img{transform:scale(1)}
+.scene-text{padding:80px clamp(40px,6vw,110px)}
+.scene.reverse .scene-img{order:2}
+.scene.reverse .scene-text{order:1}
+.scene-text .num{font-family:'Cormorant',serif;font-size:64px;font-weight:300;color:var(--oak);line-height:1;opacity:0;transform:translateY(20px);transition:.8s}
+.scene-text .tag{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--forest);font-weight:700;margin:16px 0 10px;opacity:0;transform:translateY(20px);transition:.8s .1s}
+.scene-text h2{font-family:'Cormorant',serif;font-weight:600;font-size:clamp(34px,4vw,56px);line-height:1.02;letter-spacing:.5px;opacity:0;transform:translateY(20px);transition:.8s .15s}
+.scene-text p{font-size:16px;line-height:1.7;color:#4a4a44;margin-top:18px;max-width:440px;opacity:0;transform:translateY(20px);transition:.8s .25s}
+.scene.in .num,.scene.in .tag,.scene.in h2,.scene.in p{opacity:1;transform:translateY(0)}
+
+/* ---------- FULL BLEED ---------- */
+.bleed{height:90vh;position:relative;overflow:hidden}
+.bleed img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bleed .cap{position:absolute;bottom:40px;left:40px;color:#fff;z-index:2}
+.bleed::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 60%,rgba(31,35,32,.5));z-index:1}
+.bleed .cap .t{font-size:11px;letter-spacing:4px;text-transform:uppercase;font-weight:700;opacity:.9}
+.bleed .cap h3{font-family:'Cormorant',serif;font-weight:600;font-size:clamp(28px,4vw,48px);margin-top:6px}
+
+/* ---------- TIMELINE ---------- */
+.section-pad{padding:120px 40px;max-width:1300px;margin:0 auto}
+.section-h{font-family:'Cormorant',serif;font-weight:600;font-size:clamp(34px,5vw,64px);text-align:center;margin-bottom:8px}
+.section-sub{text-align:center;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:56px}
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.week{border-top:2px solid var(--oak);padding-top:18px;opacity:0;transform:translateY(24px);transition:.7s}
+.week.in{opacity:1;transform:translateY(0)}
+.week .s{font-family:'Cormorant',serif;font-weight:600;font-size:38px;color:var(--oak);line-height:1}
+.week .t{font-weight:700;font-size:15px;margin:8px 0 6px}
+.week .d{font-size:12.5px;color:var(--mute);line-height:1.5}
+
+/* ---------- LOTS ---------- */
+.lots-section{background:var(--cream);padding:120px 40px}
+.lots-wrap{max-width:1100px;margin:0 auto}
+.lot-row{display:flex;justify-content:space-between;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateY(16px);transition:.6s}
+.lot-row.in{opacity:1;transform:translateY(0)}
+.lot-row .left{display:flex;align-items:baseline;gap:18px}
+.lot-row .ln{font-family:'Cormorant',serif;font-weight:600;font-size:22px;color:var(--forest);min-width:64px}
+.lot-row .lt{font-size:16px;font-weight:600;letter-spacing:.3px}
+.lot-row .lt span{display:block;font-size:12.5px;font-weight:400;color:var(--mute);margin-top:3px;letter-spacing:0}
+.lot-row .amt{font-family:'Cormorant',serif;font-weight:600;font-size:24px;white-space:nowrap}
+.lot-row .amt.tbd{color:var(--sage);font-size:18px;font-style:italic}
+.total-row{display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding:28px 32px;background:var(--forest);color:#fff}
+.total-row .tl{font-size:14px;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+.total-row .tv{font-family:'Cormorant',serif;font-weight:600;font-size:clamp(32px,5vw,52px)}
+.total-note{text-align:center;font-size:13px;color:var(--mute);font-style:italic;margin-top:18px}
+
+/* ---------- PALETTE ---------- */
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;max-width:1100px;margin:0 auto}
+.sw .c{height:120px;border-radius:2px}
+.sw .n{font-family:'Cormorant',serif;font-weight:600;font-size:20px;margin-top:12px}
+.sw .u{font-size:12px;color:var(--mute);margin-top:2px}
+
+/* ---------- INTERVENANTS ---------- */
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:1200px;margin:0 auto}
+.member{border-top:2px solid var(--ink);padding-top:24px}
+.member .mn{font-family:'Cormorant',serif;font-size:48px;font-weight:300;color:var(--oak);line-height:1}
+.member .me{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:700;margin:14px 0 6px}
+.member .mname{font-family:'Cormorant',serif;font-size:28px;font-weight:600;line-height:1.05}
+.member .mrole{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin:4px 0 10px}
+.member .mdesc{font-size:14px;line-height:1.6;color:#4a4a44}
+
+/* ---------- CTA / FOOTER ---------- */
+.cta{background:var(--ink);color:var(--cream);padding:120px 40px;text-align:center}
+.cta h2{font-family:'Cormorant',serif;font-weight:600;font-size:clamp(36px,6vw,72px);line-height:1}
+.cta p{font-size:15px;color:#b8b2a6;margin:20px auto 40px;max-width:560px;line-height:1.7}
+.btn{display:inline-block;padding:16px 38px;background:var(--cream);color:var(--ink);text-decoration:none;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:700;transition:.3s;border:1px solid var(--cream)}
+.btn:hover{background:transparent;color:var(--cream)}
+footer{padding:40px;text-align:center;font-size:11px;letter-spacing:2px;color:var(--mute);text-transform:uppercase}
+footer .fb{color:var(--forest);font-weight:700}
+.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn.ghost{background:transparent;color:var(--cream)}
+.btn.ghost:hover{background:var(--cream);color:var(--ink)}
+
+/* ---------- ZOOMABLE / GALLERY ---------- */
+.zoomable,.gallery-grid figure{cursor:zoom-in}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1300px;margin:0 auto}
+.gallery-grid figure{margin:0;position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--cream);opacity:0;transform:translateY(20px);transition:.7s}
+.gallery-grid figure.in{opacity:1;transform:translateY(0)}
+.gallery-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.gallery-grid figure:hover img{transform:scale(1.06)}
+.gallery-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 12px;color:#fff;font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;font-weight:700;background:linear-gradient(transparent,rgba(31,35,32,.72));opacity:0;transform:translateY(6px);transition:.4s}
+.gallery-grid figure:hover figcaption{opacity:1;transform:translateY(0)}
+
+/* ---------- LIGHTBOX ---------- */
+.lb{position:fixed;inset:0;z-index:1000;background:rgba(20,22,20,.94);display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;backdrop-filter:blur(4px)}
+.lb.open{display:flex;opacity:1}
+.lb img{max-width:92vw;max-height:84vh;object-fit:contain;box-shadow:0 30px 80px rgba(0,0,0,.5);user-select:none;cursor:zoom-out}
+.lb-cap{position:absolute;bottom:26px;left:0;right:0;text-align:center;color:#f4efe6;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700}
+.lb-count{opacity:.55;margin-left:14px;font-weight:400}
+.lb-btn,.lb-close{border:1px solid rgba(244,239,230,.4);background:rgba(0,0,0,.25);color:#f4efe6;cursor:pointer;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;transition:.25s}
+.lb-btn:hover,.lb-close:hover{background:rgba(244,239,230,.16);border-color:#f4efe6}
+.lb-btn{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;font-size:26px;line-height:1}
+.lb-prev{left:24px}.lb-next{right:24px}
+.lb-close{position:absolute;top:22px;right:26px;width:46px;height:46px;font-size:20px}
+
+/* ---------- PLAN INTERACTIF ---------- */
+.plan-wrap{max-width:760px;margin:0 auto;position:relative;line-height:0}
+.plan-wrap img{width:100%;display:block;border:1px solid var(--line);background:#fff}
+.plan-pin{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:var(--forest);color:#fff;
+  font-family:'Cormorant',serif;font-weight:600;font-size:17px;line-height:1;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:2px solid var(--paper);box-shadow:0 4px 14px rgba(31,35,32,.28);transition:.25s;padding:0}
+.plan-pin:hover{background:var(--oak);transform:scale(1.18);z-index:5}
+.plan-pin::after{content:attr(data-label);position:absolute;bottom:132%;left:50%;transform:translateX(-50%);white-space:nowrap;
+  background:var(--ink);color:var(--cream);font-family:-apple-system,sans-serif;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;
+  font-weight:700;padding:5px 9px;border-radius:3px;opacity:0;pointer-events:none;transition:.2s}
+.plan-pin:hover::after{opacity:1}
+.plan-legend{text-align:center;font-size:12.5px;color:var(--mute);margin-top:22px;font-style:italic}
+
+/* ---------- VISITE ANIMÉE ---------- */
+.films{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1200px;margin:0 auto}
+.film{position:relative;overflow:hidden;background:var(--cream);aspect-ratio:1280/832;border:1px solid var(--line)}
+.film video{width:100%;height:100%;object-fit:cover;display:block}
+.film .flabel{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 16px;color:#fff;font-size:11px;letter-spacing:3px;
+  text-transform:uppercase;font-weight:700;background:linear-gradient(transparent,rgba(31,35,32,.72));pointer-events:none}
+.film .flabel .fn{font-family:'Cormorant',serif;font-size:22px;letter-spacing:.5px;text-transform:none;font-weight:600;display:block;margin-top:2px}
+
+@media(max-width:860px){
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .films{grid-template-columns:1fr}
+  .lb-btn{width:44px;height:44px;font-size:22px}.lb-prev{left:10px}.lb-next{right:10px}
+}
+@media(max-width:860px){
+  .scene{grid-template-columns:1fr}
+  .scene.reverse .scene-img{order:0}
+  .scene.reverse .scene-text{order:0}
+  .scene-img{height:60vh}
+  .scene-text{padding:50px 32px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:none}
+  .timeline{grid-template-columns:repeat(2,1fr);gap:24px}
+  .palette{grid-template-columns:repeat(2,1fr)}
+  .team{grid-template-columns:1fr;gap:28px}
+  nav{padding:16px 24px}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">SYMI Intelligence</div>
+  <div class="ref">Réf. D000124</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-media" src="public/videos/facade.mp4" poster="public/visuels/facade.jpg" autoplay muted playsinline preload="auto"></video>
+  <div class="hero-content">
+    <div class="eyebrow">Projet d'agencement · Paris 10ᵉ</div>
+    <h1 class="serif">Optique Guez</h1>
+    <div class="sub serif">Une boutique conçue, orchestrée et livrée clé en main.</div>
+  </div>
+  <div class="scroll-cue">Découvrir ↓</div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="kicker">L'intention</div>
+  <p>Du gros œuvre à la réception acoustique, SYMI Intelligence orchestre l'intégralité de l'agencement intérieur. <span class="mute">Chêne clair, marbre, pierre crème et verrière noire — une boutique pensée comme un objet d'architecture, pas comme un aménagement.</span></p>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="l">Surface</div><div class="v serif">44 m²</div></div>
+  <div class="stat"><div class="l">Durée chantier</div><div class="v serif">6 sem.</div></div>
+  <div class="stat"><div class="l">Lots coordonnés</div><div class="v serif">10</div></div>
+  <div class="stat accent"><div class="l">Livraison</div><div class="v serif">Clé en main</div></div>
+</div>
+
+<!-- SCENES -->
+<section class="scene">
+  <div class="scene-img"><img src="public/visuels/vue-espace-vente.jpg" alt=""></div>
+  <div class="scene-text">
+    <div class="num serif">01</div>
+    <div class="tag">L'espace de vente</div>
+    <h2 class="serif">Le bois, du sol au plafond</h2>
+    <p>Parquet massif chêne en bâton rompu, présentoirs sur-mesure et étagères suspendues. La lumière sur rails noir mat sculpte chaque collection. La cohérence du chêne clair court d'un mur à l'autre.</p>
+  </div>
+</section>
+
+<section class="scene reverse">
+  <div class="scene-img"><img src="public/visuels/vue-niche-marbre.jpg" alt=""></div>
+  <div class="scene-text">
+    <div class="num serif">02</div>
+    <div class="tag">La niche signature</div>
+    <h2 class="serif">Marbre & cadre noir</h2>
+    <p>Une niche héro encadrée de noir mat, fond marbre Calacatta éclairé en LED, faisceau directionnel. Le point focal de la boutique — là où le regard s'arrête et où la pièce maîtresse se montre.</p>
+  </div>
+</section>
+
+<section class="scene">
+  <div class="scene-img"><img src="public/visuels/vue-accueil-verriere.jpg" alt=""></div>
+  <div class="scene-text">
+    <div class="num serif">03</div>
+    <div class="tag">Accueil & atelier</div>
+    <h2 class="serif">La verrière noire</h2>
+    <p>Structure acier noir mat et vitrage clair séparent l'espace de vente de l'atelier. Le comptoir d'accueil en chêne, plan effet marbre, dialogue avec le mur pierre crème en arrière-plan.</p>
+  </div>
+</section>
+
+<!-- BLEED -->
+<section class="bleed">
+  <img src="public/visuels/vue-pierre-saint-laurent.jpg" alt="">
+  <div class="cap">
+    <div class="t">Mur pierre apparente</div>
+    <h3 class="serif">Une matière qui ancre le lieu</h3>
+  </div>
+</section>
+
+<section class="scene reverse">
+  <div class="scene-img"><img src="public/visuels/vue-cabine-verriere.jpg" alt=""></div>
+  <div class="scene-text">
+    <div class="num serif">04</div>
+    <div class="tag">Cabine audioprothèse</div>
+    <h2 class="serif">Le silence, mesuré</h2>
+    <p>Cellule acoustique double peau, isolant laine minérale, dalles Rockfon en plénum et bloc-porte isophonique −39 dB. Objectif : bruit de fond inférieur à 40 dBA, contrôlé au sonomètre en réception.</p>
+  </div>
+</section>
+
+<section class="scene">
+  <div class="scene-img"><img src="public/visuels/vue-table-essayage.jpg" alt=""></div>
+  <div class="scene-text">
+    <div class="num serif">05</div>
+    <div class="tag">Table d'essayage</div>
+    <h2 class="serif">Le geste du choix</h2>
+    <p>Îlot central chêne et plan marbre, baigné de lumière naturelle. Les présentoirs verticaux suspendus encadrent l'espace où le client essaie, compare, décide.</p>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section-pad">
+  <h2 class="section-h serif">Le chantier en 6 semaines</h2>
+  <div class="section-sub">Planning maître coordonné par SYMI</div>
+  <div class="timeline">
+    <div class="week"><div class="s serif">S1</div><div class="t">Démolition</div><div class="d">Mise à nu, dépose, évacuation, repérages techniques.</div></div>
+    <div class="week"><div class="s serif">S2</div><div class="t">Structure</div><div class="d">Cloisons, cabine acoustique, plafonds, gros réseaux.</div></div>
+    <div class="week"><div class="s serif">S3</div><div class="t">Second œuvre</div><div class="d">Sols, peinture, verrière, parements pierre.</div></div>
+    <div class="week"><div class="s serif">S4</div><div class="t">Second œuvre</div><div class="d">Finitions techniques, raccords, préparation menuiserie.</div></div>
+    <div class="week"><div class="s serif">S5</div><div class="t">Agencement</div><div class="d">Pose mobilier, vitrines, LED intégrées, finitions bois.</div></div>
+    <div class="week"><div class="s serif">S6</div><div class="t">Réception</div><div class="d">Mesures acoustiques, nettoyage, réserves, remise des clés.</div></div>
+  </div>
+</section>
+
+<!-- LOTS -->
+<section class="lots-section">
+  <div class="lots-wrap">
+    <h2 class="section-h serif">Le périmètre, lot par lot</h2>
+    <div class="section-sub">Agencement complet · clé en main · 10 lots coordonnés</div>
+    <div id="lots"></div>
+    <div class="total-note">Façade / devanture commerçante en phase 2. Menuiserie sur-mesure réalisée par l'atelier partenaire. Devis chiffré détaillé remis sur demande.</div>
+  </div>
+</section>
+
+<!-- PALETTE -->
+<section class="section-pad">
+  <h2 class="section-h serif">Matériaux de référence</h2>
+  <div class="section-sub">La palette du projet</div>
+  <div class="palette">
+    <div class="sw"><div class="c" style="background:#c8a878"></div><div class="n serif">Chêne clair</div><div class="u">Menuiserie · sols</div></div>
+    <div class="sw"><div class="c" style="background:#e6e1d6"></div><div class="n serif">Marbre</div><div class="u">Plans · niches</div></div>
+    <div class="sw"><div class="c" style="background:#efe7d7"></div><div class="n serif">Pierre crème</div><div class="u">Mur signature</div></div>
+    <div class="sw"><div class="c" style="background:#26261f"></div><div class="n serif">Noir mat</div><div class="u">Verrière · rails</div></div>
+    <div class="sw"><div class="c" style="background:#2c3e33"></div><div class="n serif">Vert forêt</div><div class="u">Signature SYMI</div></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section-pad" style="padding-top:40px">
+  <div class="team">
+    <div class="member"><div class="mn serif">01</div><div class="me">Conception · Orchestration</div><div class="mname serif">SYMI Intelligence</div><div class="mrole">Direction du projet</div><div class="mdesc">Concept d'agencement, cadrage technique, coordination des lots et pilotage des validations jusqu'à la réception.</div></div>
+    <div class="member"><div class="mn serif">02</div><div class="me">Atelier de menuiserie</div><div class="mname serif">Atelier partenaire</div><div class="mrole">Fabrication bois</div><div class="mdesc">Études, fabrication sur-mesure et pose : mobilier, vitrines, verrière et parquet bâton rompu.</div></div>
+    <div class="member"><div class="mn serif">03</div><div class="me">Exécution chantier</div><div class="mname serif">Corps d'état coordonnés</div><div class="mrole">Production & réception</div><div class="mdesc">Cloisons, acoustique, électricité, éclairage, peinture, plomberie, finitions et contrôles de conformité.</div></div>
+  </div>
+</section>
+
+<!-- VISITE ANIMÉE -->
+<section class="section-pad">
+  <h2 class="section-h serif">La visite animée</h2>
+  <div class="section-sub">Trois plans cinématiques — la boutique en mouvement</div>
+  <div class="films">
+    <div class="film"><video src="public/videos/espace-vente.mp4" poster="public/visuels/vue-espace-vente.jpg" muted playsinline preload="none"></video><div class="flabel">Le bois, du sol au plafond<span class="fn serif">L'espace de vente</span></div></div>
+    <div class="film"><video src="public/videos/accueil-verriere.mp4" poster="public/visuels/vue-accueil-verriere.jpg" muted playsinline preload="none"></video><div class="flabel">Acier noir & vitrage<span class="fn serif">La verrière</span></div></div>
+    <div class="film"><video src="public/videos/niche-marbre.mp4" poster="public/visuels/vue-niche-marbre.jpg" muted playsinline preload="none"></video><div class="flabel">Le point focal<span class="fn serif">La niche marbre</span></div></div>
+  </div>
+</section>
+
+<!-- PLAN INTERACTIF -->
+<section class="section-pad">
+  <h2 class="section-h serif">Le plan, pièce par pièce</h2>
+  <div class="section-sub">Cliquez un point pour voir le rendu — 44 m² · échelle 1/50</div>
+  <div class="plan-wrap" id="planWrap">
+    <img src="public/plan.png" alt="Plan projeté Optique Guez — état version C">
+  </div>
+  <div class="plan-legend">Plan conseil — état projeté · version C</div>
+</section>
+
+<!-- GALERIE -->
+<section class="section-pad">
+  <h2 class="section-h serif">La boutique en images</h2>
+  <div class="section-sub">Tous les visuels du projet — cliquez pour agrandir</div>
+  <div class="gallery-grid" id="gallery"></div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2 class="serif">Prêt à entrer dans votre future boutique ?</h2>
+  <p>Le devis détaillé, le planning et les garanties vous sont remis dans un document dédié, sur simple demande. La direction de projet est assurée de bout en bout par SYMI Intelligence.</p>
+  <div class="cta-actions">
+    <a class="btn" href="mailto:contact@symi.io?subject=Optique%20Guez%20%E2%80%94%20Demande%20de%20devis%20d%C3%A9taill%C3%A9%20(R%C3%A9f.%20D000124)&body=Bonjour%2C%0D%0A%0D%0AJe%20souhaite%20recevoir%20le%20devis%20d%C3%A9taill%C3%A9%20du%20projet%20d'agencement%20Optique%20Guez%20(R%C3%A9f.%20D000124).%0D%0A%0D%0AMerci.">Demander le devis détaillé</a>
+    <a class="btn ghost" href="mailto:contact@symi.io?subject=Optique%20Guez%20%E2%80%94%20Prise%20de%20rendez-vous%20(R%C3%A9f.%20D000124)&body=Bonjour%2C%0D%0A%0D%0AJe%20souhaite%20convenir%20d'un%20rendez-vous%20concernant%20le%20projet%20d'agencement%20Optique%20Guez%20(R%C3%A9f.%20D000124).%0D%0A%0D%0AMes%20disponibilit%C3%A9s%20%3A%0D%0A%0D%0AMerci.">Prendre rendez-vous</a>
+  </div>
+</section>
+
+<footer>
+  <span class="fb">SYMI INTELLIGENCE</span> · Direction de projet & orchestration · Paris · Réf. D000124 · 05/06/2026
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true">
+  <button class="lb-close" id="lbClose" aria-label="Fermer">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Précédent">‹</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Suivant">›</button>
+  <div class="lb-cap"><span id="lbCap"></span><span class="lb-count" id="lbCount"></span></div>
+</div>
+
+<script>
+// Inject lots
+const lots=[
+ ["01","Démolition · Dépose · Évacuation",""],
+ ["02","Cloisons · Plâtrerie · Plafonds","Acoustique cabine incluse"],
+ ["03","Menuiserie sur-mesure","Atelier partenaire"],
+ ["04","Sols · Parquet massif bâton rompu",""],
+ ["05","Mur pierre apparente · Parements",""],
+ ["06","Électricité · Courants forts & faibles",""],
+ ["07","Éclairage · Rails · LED intégrées",""],
+ ["08","Peinture · Enduits · Finitions",""],
+ ["09","Plomberie · Évacuation atelier",""],
+ ["10","Mesures de réception acoustique",""],
+ ["11","Façade · Devanture commerçante","Phase 2 · périmètre à définir"],
+];
+const c=document.getElementById('lots');
+lots.forEach(([n,t,s])=>{
+  const sub=s?`<span>${s}</span>`:'';
+  c.insertAdjacentHTML('beforeend',
+   `<div class="lot-row"><div class="left"><div class="ln serif">${n}</div><div class="lt">${t}${sub}</div></div></div>`);
+});
+
+// Reveal on scroll
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.2});
+document.querySelectorAll('.scene,.week,.lot-row').forEach(el=>io.observe(el));
+
+// Stagger weeks & lots
+document.querySelectorAll('.week').forEach((w,i)=>w.style.transitionDelay=(i*0.08)+'s');
+document.querySelectorAll('.lot-row').forEach((w,i)=>w.style.transitionDelay=(i*0.04)+'s');
+
+/* ---------- GALERIE + LIGHTBOX ---------- */
+// Ordre = parcours de visite. Source de vérité unique pour la galerie ET la lightbox.
+const gallery=[
+ ["facade.jpg","Façade"],
+ ["vue-entree.jpg","Entrée"],
+ ["vue-espace-vente.jpg","Espace de vente"],
+ ["vue-mur-presentoirs.jpg","Mur présentoirs"],
+ ["vue-presentoirs-fenetre.jpg","Présentoirs fenêtre"],
+ ["vue-presentoirs-pierre.jpg","Présentoirs pierre"],
+ ["vue-niche-marbre.jpg","Niche marbre"],
+ ["vue-mur-marbre.jpg","Mur marbre"],
+ ["vue-niche-tables.jpg","Niche & tables"],
+ ["vue-table-essayage.jpg","Table d'essayage"],
+ ["vue-accueil-verriere.jpg","Accueil & verrière"],
+ ["vue-comptoir-atelier.jpg","Comptoir atelier"],
+ ["vue-pierre-saint-laurent.jpg","Mur pierre apparente"],
+ ["vue-cabine-verriere.jpg","Cabine audioprothèse"],
+ ["vue-cabine-dessus.jpg","Cabine · vue de dessus"],
+ ["vue-plan-dessus.jpg","Plan d'ensemble"],
+];
+const BASE='public/visuels/';
+const gEl=document.getElementById('gallery');
+gallery.forEach(([src,cap],i)=>{
+  gEl.insertAdjacentHTML('beforeend',
+   `<figure data-i="${i}"><img src="${BASE}${src}" alt="${cap}" loading="lazy"><figcaption>${cap}</figcaption></figure>`);
+});
+gEl.querySelectorAll('figure').forEach(f=>io.observe(f));
+
+// Lightbox
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),
+      lbCap=document.getElementById('lbCap'),lbCount=document.getElementById('lbCount');
+let idx=0;
+const fileOf=s=>s.split('/').pop();
+const indexOf=name=>gallery.findIndex(g=>g[0]===name);
+function show(i){
+  idx=(i+gallery.length)%gallery.length;
+  const [src,cap]=gallery[idx];
+  lbImg.src=BASE+src;lbImg.alt=cap;
+  lbCap.textContent=cap;lbCount.textContent=(idx+1)+' / '+gallery.length;
+}
+function openLb(i){show(i);lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+function closeLb(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+const next=()=>show(idx+1), prev=()=>show(idx-1);
+
+// Ouvertures : galerie + images de scène + bandeau pleine largeur
+gEl.querySelectorAll('figure').forEach(f=>f.addEventListener('click',()=>openLb(+f.dataset.i)));
+document.querySelectorAll('.scene-img img,.bleed img').forEach(img=>{
+  img.classList.add('zoomable');
+  img.addEventListener('click',()=>{const i=indexOf(fileOf(img.getAttribute('src')));if(i>=0)openLb(i);});
+});
+
+// Navigation
+document.getElementById('lbClose').addEventListener('click',closeLb);
+document.getElementById('lbNext').addEventListener('click',e=>{e.stopPropagation();next();});
+document.getElementById('lbPrev').addEventListener('click',e=>{e.stopPropagation();prev();});
+lb.addEventListener('click',e=>{if(e.target===lb||e.target===lbImg)closeLb();}); // fermeture au clic
+document.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')closeLb();
+  else if(e.key==='ArrowRight')next();
+  else if(e.key==='ArrowLeft')prev();
+});
+
+/* ---------- PLAN INTERACTIF : marqueurs cliquables ---------- */
+// [x%, y%, numéro, fichier rendu, label] — positions v1, ajustables au pixel
+const pins=[
+ [50,90,"1","vue-entree.jpg","Entrée"],
+ [20,56,"2","vue-espace-vente.jpg","Espace de vente"],
+ [82,54,"3","vue-mur-presentoirs.jpg","Présentoirs"],
+ [46,70,"4","vue-table-essayage.jpg","Table d'essayage"],
+ [52,48,"5","vue-niche-tables.jpg","Consultation"],
+ [30,30,"6","vue-niche-marbre.jpg","Niche marbre"],
+ [22,18,"7","vue-cabine-verriere.jpg","Cabine audio"],
+ [58,22,"8","vue-accueil-verriere.jpg","Accueil / verrière"],
+];
+const pw=document.getElementById('planWrap');
+pins.forEach(([x,y,n,file,label])=>{
+  const b=document.createElement('button');
+  b.className='plan-pin';b.style.left=x+'%';b.style.top=y+'%';
+  b.textContent=n;b.setAttribute('data-label',label);b.setAttribute('aria-label',label);
+  b.addEventListener('click',()=>{const i=indexOf(file);if(i>=0)openLb(i);});
+  pw.appendChild(b);
+});
+
+/* ---------- VISITE ANIMÉE : lecture quand visible, pause sinon ---------- */
+const vio=new IntersectionObserver((es)=>{es.forEach(e=>{
+  const v=e.target.querySelector('video');
+  if(!v)return;
+  if(e.isIntersecting){const p=v.play();if(p)p.catch(()=>{});}
+  else{v.pause();v.currentTime=0;} // sort de l'écran → prêt à rejouer proprement au retour
+})},{threshold:.35});
+document.querySelectorAll('.film').forEach(f=>vio.observe(f));
+</script>
+</body>
+</html>

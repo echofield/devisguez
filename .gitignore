@@ -1,0 +1,13 @@
+# Docs internes — contiennent les montants du devis, ne jamais publier
+*.md
+
+# Devis chiffré — privé
+*.pdf
+
+# Sauvegardes vidéos non compressées (lourdes)
+public/videos/_orig/
+
+# Vercel / OS
+.vercel/
+.DS_Store
+Thumbs.db
